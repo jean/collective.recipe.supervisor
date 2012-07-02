@@ -2,10 +2,10 @@ This recipe when used will do the following:
 
  * install ``supervisor`` and all its dependecies.
 
- * generates the supervisord, supervisorctl, and memmon scripts in the bin 
+ * generates the ``supervisord``, ``supervisorctl``, and ``memmon`` scripts in the ``bin`` 
    directory 
 
- * generates a configuration file to be used by supervisord and supervisorctl
+ * generates a configuration file to be used by ``supervisord`` and ``supervisorctl``
    scripts
 
 Supported options
@@ -15,24 +15,24 @@ The recipe supports the following options:
 
 sections
     List of enabled supervisor sections.
-    Defaults to "http ctl rpc"
+    Defaults to ``http ctl rpc``
 
 plugins
-    Extra eggs you want the recipe to install. ie: superlance
-        
+    Extra eggs you want the recipe to install, e.g. ``superlance``
+
 http-socket
-    "inet" or "unix" socket to use for http administration. Defaults to "inet".
+    ``inet`` or ``unix`` socket to use for HTTP administration. Defaults to ``inet``.
 
 file
-    A path to a UNIX domain socket (e.g. /tmp/supervisord.sock) on which
+    A path to a UNIX domain socket (e.g. ``/tmp/supervisord.sock``) on which
     supervisor will listen for HTTP/XML-RPC requests.
 
 chmod
     Change the UNIX permission mode bits of the UNIX domain socket to this value at startup.
 
 port
-    The port nummber supervisord listen to. ie: 9001. Can be given as host:port
-    like 127.0.0.1:9001. Defaults to 127.0.0.1:9001
+    The port number ``supervisord`` listens to, e.g. ``9001``. Can be given as ``host:port``, e.g.
+    ``127.0.0.1:9001``. Defaults to ``127.0.0.1:9001``
 
 user
     The username required for authentication to supervisord
@@ -42,7 +42,7 @@ password
 
 supervisord-conf
     Full path to where the recipe puts the supervisord configuration file. 
-    Defaults to ${buildout:directory}/parts/${name}/supervisord.conf
+    Defaults to ``${buildout:directory}/parts/${name}/supervisord.conf``
     
 supervisord-user
     If supervisord is run as the root user, switch users to this UNIX user 
@@ -51,110 +51,109 @@ supervisord-user
     
 supervisord-directory
     When supervisord daemonizes, switch to this directory. This option can 
-    include the value %(here)s, which expands to the directory in which the 
+    include the value ``%(here)s``, which expands to the directory in which the 
     supervisord configuration file was found.
     
 supervisord-environment
-    A list of key/value pairs in the form KEY=val,KEY2=val2 that will be placed
-    in the supervisord process’ environment (and as a result in all of its 
-    child process’ environments). This option can include the value %(here)s,
+    A list of key/value pairs in the form ``KEY=val,KEY2=val2`` that will be placed
+    in the supervisord process's environment (and as a result in all of its 
+    child processes' environments). This option can include the value ``%(here)s``,
     which expands to the directory in which the supervisord configuration file
     was found. Note that subprocesses will inherit the environment variables of
     the shell used to start supervisord except for the ones overridden here and
-    within the program’s environment configuration stanza.
+    within the program's environment configuration stanza.
 
 childlogdir
     The full path of the directory where log files of processes managed by
-    Supervisor while be stored. Defaults to ${buildout:directory}/var/log
+    Supervisor while be stored. Defaults to ``${buildout:directory}/var/log``
 
 logfile
     The full path to the supervisord log file. Defaults to 
-    ${buildout:directory}/var/log/supervisord.log
+    ``${buildout:directory}/var/log/supervisord.log``
 
 pidfile
     The pid file of supervisord. Defaults to 
-    ${buildout:directory}/var/supervisord.pid
+    ``${buildout:directory}/var/supervisord.pid``
 
 logfile-maxbytes
     The maximum number of bytes that may be consumed by the activity log file 
-    before it is rotated. Defaults to 50MB
+    before it is rotated. Defaults to 50MB.
 
 logfile-backups
     The number of backups to keep around resulting from activity log file 
-    rotation. Defaults to 10
+    rotation. Defaults to 10.
 
 loglevel
-   The logging level. Can be one of critical, error, warn, info, debug, trace, 
-   or blather. Defaults to info
+   The logging level. Can be one of ``critical``, ``error``, ``warn``, ``info``, ``debug``, ``trace``, 
+   or ``blather``. Defaults to ``info``.
 
 umask
-   The umask of the supervisord process. Defaults to 022.
+   The umask of the supervisord process. Defaults to ``022``.
 
 nodaemon
    If true, supervisord will start in the foreground instead of daemonizing.
-   Defaults to false
+   Defaults to false.
 
 nocleanup
   Prevent supervisord from clearing any existing AUTO child log files at
-  startup time. Useful for debugging. Defaults to false
+  startup time. Useful for debugging. Defaults to false.
 
 serverurl
    The URL that should be used to access the supervisord server. Defaults to
-   http://127.0.0.1:9001
+   ``http://127.0.0.1:9001``
 
 programs
    A list of programs you want the supervisord to control. One per line. 
-   The format of a line is as follow:
+   The format of a line is as follows::
    
-       priority process_name [(process_opts)] command [[args] [directory] [[redirect_stderr]]
-                                     [user]]
+       priority process_name [(process_opts)] command [[args] [directory] [[redirect_stderr]] [user]]
    
-   The [args] is any number of arguments you want to pass to the ``command``
-   It has to be given between [] (ie.: [-v fg]). See examples below.
-   If not given the redirect_stderr defaults to false.
-   If not given the directory option defaults to the directory containing the
+   The ``[args]`` are any number of arguments you want to pass to the ``command``.
+   It has to be given between ``[]`` (e.g. ``[-v fg]``). See examples below.
+   If not given, ``redirect_stderr`` defaults to false.
+   If not given, the ``directory`` option defaults to the directory containing the
    the command.
-   The optional process_opts argument sets additional options on the proccess
+   The optional ``process_opts`` argument sets additional options on the proccess
    in the supervisord configuration.  
    It has to be given between ``()`` and must contain options in ``key=value`` format
-   with spaces only for separating options - ie.: (autostart=false startsecs=10).
-   The optional user argument gives the userid that the process should be run
+   with spaces only for separating options -- e.g. ``(autostart=false startsecs=10)``.
+   The optional ``user`` argument gives the userid that the process should be run
    as (if supervisord is run as root).
 
-   In most cases you will only need to give the 4 first parts:
+   In most cases you will only need to give the 4 first parts::
 
        priority process_name command [[args]]
 
 eventlisteners
     A list of eventlisteners you'd like supervisord to run as subprocesses to
     subscribe to event notifications. One per line. Relevant supervisor 
-    documentation about events at 
-    http://supervisord.org/manual/current/events.html.
+    documentation about events is at 
+    http://supervisord.org/manual/current/events.html ::
     
         processname events command [[args]]
     
     ``events`` is a comma-separated list (without spaces) of event type names 
-    that the listener is "interested" in receiving notifications for.
+    that the listener is interested in receiving notifications for.
     
-    Supervisor provides one event listener called memmon which can be used to
+    Supervisor provides one event listener called ``memmon`` which can be used to
     restart supervisord child process once they reach a certain memory limit.
     Note that you need to define the variables ``user``, ``password`` and ``serverurl``
     (described in the supported options above) to be able to use the memmon listener.
     An example of defining a memmon event listener, which analyzes memory usage 
-    every 60 seconds and restarts as needed could look like:
+    every 60 seconds and restarts as needed could look like::
     
        MemoryMonitor TICK_60 ${buildout:bin-directory}/memmon [-p process_name=200MB]
     
 groups
    A list of programs that become part of a group. One per line.
-   The format of a line is as follow:
+   The format of a line is as follow::
     
        priority group_name program_names
     
-   The programs_name is a comma-separated list of program names.
+   ``programs_name`` is a comma-separated list of program names.
     
 env-path
-    The environment variable PATH, e.g. /bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin
+    The environment variable PATH, e.g. ``/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin``
 
 
 Example usage
@@ -198,7 +197,7 @@ We'll start by creating a buildout that uses the recipe::
     ...       20 others other,other2,other3
     ... """)
 
-Chris Mc Donough said::
+Chris McDonough said::
 
      Note however that the "instance" script Plone uses to start Zope when
      passed "fg" appears to use os.system, so the process that supervisor is 
@@ -218,7 +217,7 @@ Running the buildout gives us::
     Generated script '/sample-buildout/bin/supervisorctl'.
     <BLANKLINE>
 
-Check that we have the 'crashmail', 'memmon' and 'httpok' scripts from superlance::
+Check that we have the ``crashmail``, ``memmon`` and ``httpok`` scripts from superlance::
 
     >>> ls(sample_buildout, 'bin')
     -  buildout
@@ -229,20 +228,20 @@ Check that we have the 'crashmail', 'memmon' and 'httpok' scripts from superlanc
     -  supervisord
     
 
-You can now just run the supervisord like this::
+You can now just run the ``supervisord`` script like this::
 
     $ bin/supervisord
 
-and control it with supervisorctl::
+and control it with ``supervisorctl``::
 
     $ bin/supervisorctl
 
-Memory monitoring via supervisor's memmon event listener will be executed via
+Memory monitoring via supervisor's ``memmon`` event listener will be executed via
 supervisord with the following::
 
     $ bin/memmon
 
-now, get a look to the generated supervisord.conf file::
+Now, have a look at the generated ``supervisord.conf`` file::
 
     >>> cat('parts', 'supervisor', 'supervisord.conf') #doctest: +REPORT_NDIFF
     <BLANKLINE>
@@ -348,8 +347,8 @@ now, get a look to the generated supervisord.conf file::
     priority = 20
 
 
-and if we look to generated supervisord script we will see that the 
-configuration file is given as argument with the '-c' option::
+and if we look at generated supervisord script we will see that the 
+configuration file is given as argument with the ``-c`` option::
 
     >>> cat('bin', 'supervisord')
     ...
@@ -378,7 +377,7 @@ username. This allows to run it as is::
     if __name__ == '__main__':
         supervisor.supervisorctl.main(sys.argv[1:])
 
-Memmon delegates all work to the egg's memmon Python script itself::
+Memmon delegates all work to the egg's ``memmon`` Python script itself::
 
     >>> cat('bin', 'memmon')
     ...
@@ -390,13 +389,13 @@ Memmon delegates all work to the egg's memmon Python script itself::
     if __name__ == '__main__':
         superlance.memmon.main()
 
-The log directory is created by the recipe::
+The ``log`` directory is created by the recipe::
 
     >>> ls(sample_buildout, 'var')
     d  log
 
 You can also specify a custom port to run the supervisor on, and the control
-script will automatically try to connect to the specified port:
+script will automatically try to connect to the specified port::
 
     >>> write('buildout.cfg',
     ... """
@@ -412,7 +411,7 @@ script will automatically try to connect to the specified port:
     ... """)
 
 Here we specified that the supervisor will be launched on port 9005. We can see
-that this is also set in the control script:
+that this is also set in the control script::
 
     >>> _ = system(buildout)
     >>> cat('bin', 'supervisorctl')
@@ -427,8 +426,8 @@ that this is also set in the control script:
     if __name__ == '__main__':
         supervisor.supervisorctl.main(sys.argv[1:])
 
-It is possible to run http server through `unix socket
-<http://supervisord.org/configuration.html#unix-http-server-section-values>`_ rather than tcp:
+It is possible to run the HTTP server on a `unix socket
+<http://supervisord.org/configuration.html#unix-http-server-section-values>`_ rather than TCP/IP::
 
     >>> write('buildout.cfg',
     ... """
